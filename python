@@ -1,0 +1,70 @@
+# Base class for general gadgets
+class Gadget:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+    
+    def power_on(self):
+        return f"{self.brand} {self.model} is powering on."
+    
+    def power_off(self):
+        return f"{self.brand} {self.model} is powering off."
+    
+    def __str__(self):
+        return f"Gadget(Brand: {self.brand}, Model: {self.model})"
+
+# Derived class for a Smartphone
+class Smartphone(Gadget):
+    def __init__(self, brand, model, os, storage, ram):
+        super().__init__(brand, model)  # Initialize base class attributes
+        self.os = os
+        self.storage = storage
+        self.ram = ram
+        self.is_locked = True
+    
+    def unlock(self):
+        if self.is_locked:
+            self.is_locked = False
+            return f"{self.brand} {self.model} is now unlocked!"
+        return f"{self.brand} {self.model} is already unlocked."
+    
+    def lock(self):
+        if not self.is_locked:
+            self.is_locked = True
+            return f"{self.brand} {self.model} is now locked!"
+        return f"{self.brand} {self.model} is already locked."
+    
+    def install_app(self, app_name):
+        return f"Installing {app_name} on {self.brand} {self.model}..."
+    
+    def __str__(self):
+        return (f"Smartphone(Brand: {self.brand}, Model: {self.model}, "
+                f"OS: {self.os}, Storage: {self.storage}GB, RAM: {self.ram}GB)")
+
+# Specialized class for Gaming Smartphone (demonstrating polymorphism)
+class GamingSmartphone(Smartphone):
+    def __init__(self, brand, model, os, storage, ram, cooling_system):
+        super().__init__(brand, model, os, storage, ram)
+        self.cooling_system = cooling_system
+
+    def enable_game_mode(self):
+        return f"Game Mode enabled on {self.brand} {self.model}! Cooling System: {self.cooling_system} activated."
+    
+    def __str__(self):
+        base_info = super().__str__()
+        return base_info + f", Cooling System: {self.cooling_system}"
+
+# Testing the classes
+# Create instances
+basic_phone = Smartphone("Samsung", "Galaxy S21", "Android", 128, 8)
+gaming_phone = GamingSmartphone("ASUS", "ROG Phone 5", "Android", 256, 16, "Liquid Cooling")
+
+# Using methods
+print(basic_phone)  # Basic smartphone details
+print(basic_phone.power_on())
+print(basic_phone.unlock())
+print(basic_phone.install_app("Spotify"))
+
+print("\n" + str(gaming_phone))  # Gaming smartphone details
+print(gaming_phone.enable_game_mode())
+print(gaming_phone.power_off())
